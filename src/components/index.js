@@ -14,6 +14,9 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from "react-redux"
 
+//Reducers
+import usersReducer from "../reducers/users-reducer.js";
+
 //Components
 import CheckUser from "./authentication/index.js";
 
@@ -21,7 +24,9 @@ import CheckUser from "./authentication/index.js";
 import "./index.css"
 
 const store = configureStore({
-    reducer:{}
+    reducer:{
+        users: usersReducer
+    }
 })
 
 
@@ -31,6 +36,7 @@ function Mixologist(){
             <CheckUser>
                 <BrowserRouter>
                     <Routes>
+                        <Route index element={<div></div>}></Route>
                     </Routes>
                 </BrowserRouter>
             </CheckUser>
