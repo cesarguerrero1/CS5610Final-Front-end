@@ -28,7 +28,7 @@ function Navigation() {
         <div className="col-12 my-2">
             <div>
                 <div className="d-flex justify-content-between">
-                    {currentUser && isAdmin && <h5>Welcome back: {currentUser.username} - (<Link to="/users" className="wd-nav-link">Manage Users</Link>)</h5>}
+                    {currentUser && isAdmin && <h5>Welcome back: {currentUser.username} - (<Link to="/admin/users" className="wd-nav-link">Manage Users</Link>)</h5>}
                     {!currentUser && !isAdmin && <span></span>}
                     {!currentUser && <h5><Link to="/login" className="wd-nav-link">Login</Link></h5>}
                     {currentUser && !isAdmin && <h5>Welcome back: {currentUser.username}</h5>}

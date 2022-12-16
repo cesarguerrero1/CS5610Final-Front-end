@@ -88,9 +88,13 @@ const userSlice = createSlice({
         //Update a user
         [updateUserThunk.fulfilled]: (state, action) =>{
             const index = state.allUsers.findIndex((user) => {
-                return user._id === action.payload._uid;
+                return user._id === action.payload._id;
             })
             state.allUsers[index] = action.payload;
+            //We may potentially be updating our own file so let's check that
+            if(action.payload._id === state.currentUser._id){
+                state.currentUser = action.payload;
+            }
             alert("Successful account update!");
             return
         },

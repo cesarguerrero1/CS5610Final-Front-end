@@ -21,11 +21,11 @@ export const findAllUsers = async () => {
 }
 
 export const updateUser = async (user) => {
-    const response = await axios.put(`USERS_API/${user._id}`, user);
+    const response = await axios.put(`${USERS_API}/${user._id}`, user);
     return response.data
 }
 
 export const deleteUser = async (uid) => {
-    const response = await axios.delete(`USERS_API/${uid}`);
+    const response = await axios.delete(`${USERS_API}/${uid}`);
     return response.data;
 }

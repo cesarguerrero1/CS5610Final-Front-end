@@ -54,7 +54,6 @@ function Login() {
 
     }
 
-
     useEffect(() => {
         //We don't want a user to be on this page if they are logged in already!
         if (currentUser !== null) {

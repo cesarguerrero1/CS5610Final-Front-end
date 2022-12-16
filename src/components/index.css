@@ -6,6 +6,13 @@
     border-radius: 5px;
 }
 
+.wd-form-border{
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+}
+
 /**CSS FOR NAVIGATION**/
 .wd-navigation-bottom-border{
     margin: 0px auto 12px auto;
@@ -21,13 +28,6 @@
 
 /**CSS FOR LOGIN/REGISTER PAGE**/
 
-.wd-form-border{
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    border-radius: 10px;
-}
-
 .btn.wd-login-register-button{
     display: block;
     color:white;
@@ -35,6 +35,14 @@
     padding: 6px 12px;
     margin:6px auto;
     width:50%
+}
+
+/** CSS FOR HOME PAGE **/
+.wd-line-break{
+    width:25%;
+    margin:16px auto;
+    border-top:0px;
+    border-bottom:solid 2px #1da1f2;
 }
 
 /**CSS FOR ADMIN PAGE **/
@@ -45,14 +53,16 @@
 
 /**CSS FOR PROFILE PAGE **/
 .btn.wd-update-button{
+    display: block;
     color:white;
     background-color: #1da1f2;
     padding: 6px 12px;
-    margin: 0px 6px;
+    margin: 6px auto;
     width: 25%;
 }
 
 .btn.wd-delete-button{
+    display: block;
     color:white;
     background-color: red;
     padding:6px 12px;

@@ -16,20 +16,24 @@ import { Provider } from "react-redux"
 
 //Reducers
 import usersReducer from "../reducers/users-reducer.js";
+import cocktailsReducer from "../reducers/cocktails-reducer.js"
 
 //Components
 import CheckUser from "./authentication/index.js";
 import Navigation from "./navigation/index.js";
 import Home from "./home/index.js";
-import Login from "./login/index.js"
-import AdminPage from "./admin/index.js"
+import Login from "./login/index.js";
+import AdminPage from "./admin/index.js";
+import PublicProfile from "./profile/public-profile.js";
+import PrivateProfile from "./profile/private-profile.js";
 
 //CSS
 import "./index.css"
 
 const store = configureStore({
     reducer:{
-        users: usersReducer
+        users: usersReducer,
+        cocktails: cocktailsReducer
     }
 })
 
@@ -48,7 +52,9 @@ function Mixologist(){
                             <Route index element={<Home/>}/>
                             <Route path="/home" element={<Home/>}/>
                             <Route path="/login" element={<Login/>}/>
-                            <Route path="/users" element={<AdminPage/>}/>
+                            <Route path="/admin/users" element={<AdminPage/>}/>
+                            <Route path="/profile" element={<PrivateProfile/>}/>
+                            <Route path="/profile/:uid" element={<PublicProfile/>}/>
                         </Routes>
                     </div>
                 </div>
