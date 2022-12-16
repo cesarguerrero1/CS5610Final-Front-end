@@ -8,14 +8,14 @@
 
 import axios from "axios";
 
+const BASE_URL = "https://www.thecocktaildb.com/api/json/v1/1"
+
 export const searchDrinksByIngredient = async (ingredient) => {
-    const response = await axios.get(`www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${ingredient}`)
-    console.log(response.data);
-    return response.data;
+    const response = await axios.get(`${BASE_URL}/filter.php?i=${ingredient}`);
+    return response.data.drinks;
 }
 
 export const searchDrinkById = async (id) => {
-    const response = await axios.get(`www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
-    console.log(response.data);
-    return response.data;
+    const response = await axios.get(`${BASE_URL}/lookup.php?i=${id}`);
+    return response.data.drinks[0];
 }

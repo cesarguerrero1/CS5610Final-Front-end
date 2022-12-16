@@ -26,6 +26,8 @@ import Login from "./login/index.js";
 import AdminPage from "./admin/index.js";
 import PublicProfile from "./profile/public-profile.js";
 import PrivateProfile from "./profile/private-profile.js";
+import Search from "./search/search.js"
+import CocktailDetails from "./search/details.js"
 
 //CSS
 import "./index.css"
@@ -55,6 +57,8 @@ function Mixologist(){
                             <Route path="/admin/users" element={<AdminPage/>}/>
                             <Route path="/profile" element={<PrivateProfile/>}/>
                             <Route path="/profile/:uid" element={<PublicProfile/>}/>
+                            <Route path="/search" element={<Search/>}/>
+                            <Route path="/cocktails/:cid" element={<CocktailDetails/>}/>
                         </Routes>
                     </div>
                 </div>
