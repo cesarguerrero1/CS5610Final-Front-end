@@ -1,6 +1,6 @@
 /**
  * Cesar Guerrero
- * 10/14/22
+ * 12/14/22
  * CS5610 - Final Project
  * 
  * @file This is the main entry point into our front-end. We will be using React with the help
@@ -19,6 +19,10 @@ import usersReducer from "../reducers/users-reducer.js";
 
 //Components
 import CheckUser from "./authentication/index.js";
+import Navigation from "./navigation/index.js";
+import Home from "./home/index.js";
+import Login from "./login/index.js"
+import AdminPage from "./admin/index.js"
 
 //CSS
 import "./index.css"
@@ -35,13 +39,23 @@ function Mixologist(){
         <Provider store={store}>
             <CheckUser>
                 <BrowserRouter>
-                    <Routes>
-                        <Route index element={<div></div>}></Route>
-                    </Routes>
+                <div className="container">
+                    <div className="row">
+                        <Navigation/>
+                    </div>
+                    <div className="row">
+                        <Routes>
+                            <Route index element={<Home/>}/>
+                            <Route path="/home" element={<Home/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/users" element={<AdminPage/>}/>
+                        </Routes>
+                    </div>
+                </div>
                 </BrowserRouter>
             </CheckUser>
         </Provider>
     )
 }
 
-export default Mixologist
+export default Mixologist;

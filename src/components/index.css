@@ -1,0 +1,58 @@
+/**CSS THAT IS USEFUL EVERYWHERE**/
+.wd-border{
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+}
+
+/**CSS FOR NAVIGATION**/
+.wd-navigation-bottom-border{
+    width:75%;
+    margin: 0px auto 12px auto;
+    border-top: solid 1px  black;
+}
+.wd-navigation-item-border{
+    border-right: solid .75px black;
+}
+
+/**CSS FOR LOGIN/REGISTER PAGE**/
+
+.wd-form-border{
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+}
+
+.btn.wd-login-register-button{
+    display: block;
+    color:white;
+    background-color: #1da1f2;
+    padding: 6px 12px;
+    margin:6px auto;
+    width:50%
+}
+
+/**CSS FOR ADMIN PAGE **/
+
+.wd-table-font-size{
+    font-size:14px;
+}
+
+/**CSS FOR PROFILE PAGE **/
+.btn.wd-update-button{
+    color:white;
+    background-color: #1da1f2;
+    padding: 6px 12px;
+    margin: 0px 6px;
+    width: 25%;
+}
+
+.btn.wd-delete-button{
+    color:white;
+    background-color: red;
+    padding:6px 12px;
+    margin: 0px 16px;
+    width:25%;
+}

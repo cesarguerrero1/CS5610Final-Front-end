@@ -9,13 +9,14 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 //Import Thunks
-import { isLoggedInThunk } from "../services/thunks/users-thunk.js";
+import { isLoggedInThunk, loginThunk, logoutThunk, registerThunk, findAllUsersThunk, updateUserThunk, deleteUserThunk} from "../services/thunks/users-thunk.js";
 
 //This is the initial state of our program
 const initialState = {
     loginAttemptFailed: false,
     isAdmin: false,
     currentUser: null,
+    allUsers:[],
 }
 
 const userSlice = createSlice({
@@ -24,6 +25,7 @@ const userSlice = createSlice({
 
     //This will allow us to handle all of the async calls
     extraReducers:{
+        //Check if user is logged in 
         [isLoggedInThunk.fulfilled]: (state, action) => {
             state.currentUser = action.payload;
             if(state.currentUser.accountType === "ADMIN"){
@@ -33,7 +35,78 @@ const userSlice = createSlice({
         [isLoggedInThunk.rejected]: (state, action) => {
             state.currentUser = null;
             state.isAdmin = false;
-        }
+        },
+
+        //Attempt to log the user in
+        [loginThunk.fulfilled]: (state, action) =>{
+            state.currentUser = action.payload;
+            state.loginAttemptFailed = false;
+            //Check if they are an admin
+            if(state.currentUser.accountType === "ADMIN"){
+                state.isAdmin = true;
+            }
+            alert('Your login attempt was successful! Redirecting you to the home page');
+        },
+        [loginThunk.rejected]: (state, action) =>{
+            alert("The given username and/or password are invalid");
+            return;
+        },
+
+        //Log the user out
+        [logoutThunk.fulfilled]: (state, action) =>{
+            state.currentUser = null;
+            state.loginAttemptFailed = false;
+            state.isAdmin = false;
+        },
+
+        //Regiser a user
+        [registerThunk.fulfilled]: (state, action) =>{
+            state.allUsers.push(action.payload);
+            alert('The user was successfully created!');
+            window.location.reload();
+            return;
+        },
+        [registerThunk.rejected]: (state, action) =>{
+            alert("The given username is taken! Please input a different username.");
+            return
+        },
+
+        //Get all users
+        [findAllUsersThunk.fulfilled]: (state, action) =>{
+            state.allUsers = action.payload;
+            return;
+        },
+        [findAllUsersThunk.rejected]: (state, action) =>{
+            return
+        },
+
+        //Update a user
+        [updateUserThunk.fulfilled]: (state, action) =>{
+            const index = state.allUsers.findIndex((user) => {
+                return user._id === action.payload._uid;
+            })
+            state.allUsers[index] = action.payload;
+            alert("Successful account update!");
+            return
+        },
+        [updateUserThunk.rejected]: (state, action) =>{
+            alert("Failed to update your account!");
+            return
+        },
+
+        //Delete a user
+        [deleteUserThunk.fulfilled]: (state, action) =>{
+            state.allUsers = state.allUsers.filter((user) => {
+                return user._id !== action.payload;
+            })
+            alert("User successfully deleted!");
+            return
+        },
+        [deleteUserThunk.rejected]: (state, action) =>{
+            alert("User deletion failed!");
+            return
+        },
+
     }
 })
 
