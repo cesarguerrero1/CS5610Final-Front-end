@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 //Thunks
-import { findAllUsersThunk } from "../../services/thunks/users-thunk";
+import { findAllUsersThunk, deleteUserThunk} from "../../services/thunks/users-thunk";
 
 function AdminPage() {
 
@@ -21,7 +21,11 @@ function AdminPage() {
     const dispatch = useDispatch();
 
     function userRowClickHandler(user) {
-        navigate(`/profile/${user._id}`, { state: user });
+        navigate(`/profile/${user._id}`);
+    }
+
+    function deleteClickHandler(uid){
+        dispatch(deleteUserThunk(uid));
     }
 
     useEffect(() => {
@@ -31,7 +35,6 @@ function AdminPage() {
         }else{
             dispatch(findAllUsersThunk());
         }
-        dispatch(findAllUsersThunk());
     })
 
     return (
@@ -47,24 +50,22 @@ function AdminPage() {
                 <table className="table table-striped table-hover wd-table-font-size">
                     <thead>
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Joined Date</th>
                             <th>Account Type</th>
+                            <th>Joined Date</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {allUsers.map((user) => {
                             return (
-                                <tr key={user._id} className="align-middle" onClick={() => { userRowClickHandler(user) }}>
-                                    <td>{user.firstname}</td>
-                                    <td>{user.lastname}</td>
-                                    <td>{user.username}</td>
+                                <tr key={user._id} className="align-middle">
+                                    <td onClick={() => { userRowClickHandler(user)}}>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.accountType}</td>
                                     <td>{user.joinedDate.slice(0, 10)}</td>
+                                    {currentUser._id !== user._id && <td><button className="btn wd-delete-button" onClick={() => {deleteClickHandler(user._id)}}>Delete</button></td>}
                                 </tr>
                             )
                         })}

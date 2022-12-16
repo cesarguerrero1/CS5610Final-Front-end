@@ -7,23 +7,47 @@
  */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams} from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 
-function PublicProfile(){
-    const {uid} = useParams();
+function PublicProfile() {
+    const { uid } = useParams();
     const [publicUser, setPublicUser] = useState(null);
-    const {currentUser, allUsers, isAdmin} = useSelector((state) => state.users);
+    const { allUsers } = useSelector((state) => state.users);
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    useEffect({
-
+    useEffect(() => {
+        const user = allUsers.find((user) => { return user._id === uid });
+        setPublicUser(user);
     })
 
-    return(
-        <div></div>
+    return (
+        <div>
+            {publicUser &&
+                <div>
+                    <div className="=col-12">
+                        <h6>Username: {publicUser.username}</h6>
+                        <h6>Account Type: {publicUser.accountType}</h6>
+                        {publicUser.accounType === "CONNOISSEUR" && <h6>Favorite Drink: {publicUser.favoriteDrink}</h6>}
+                        {publicUser.accounType === "BARTENDER" && <h6>Currently Working: {publicUser.currentWorkplace} ({publicUser.yearsOfExperience} Years of Experience)</h6>}
+                    </div>
+                    <div className="=col-12">
+                        <h5>My Cocktails</h5>
+                    </div>
+                    <div className="=col-12">
+                        <h5>My Histories</h5>
+                    </div>
+                    <div className="=col-12">
+                        <h5>My Pairings</h5>
+                    </div>
+                    <div className="=col-12">
+                        <h5>My Reviews</h5>
+                    </div>
+                    <div className="=col-12">
+                        <h5>My Endorsements</h5>
+                    </div>
+                </div>
+            }
+        </div>
     )
 
 }
