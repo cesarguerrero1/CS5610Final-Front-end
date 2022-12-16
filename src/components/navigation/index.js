@@ -7,39 +7,50 @@
  */
 
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+//Thunks
+import {logoutThunk} from "../../services/thunks/users-thunk.js"
 
 function Navigation() {
     //We want to update the navigation if the user is logged in and/or an admin
     const {currentUser, isAdmin} = useSelector(state => state.users);
 
+    const dispatch = useDispatch();
+
+
+    function logoutClickHandler(){
+        dispatch(logoutThunk(currentUser));
+    }
+
     return (
-        <div>
-            <div className="col-12 my-2">
+        <div className="col-12 my-2">
+            <div>
                 <div className="d-flex justify-content-between">
-                    {currentUser && isAdmin && <span><Link to="/users">Manage Users</Link></span>}
+                    {currentUser && isAdmin && <h5>Welcome back: {currentUser.username} - (<Link to="/users" className="wd-nav-link">Manage Users</Link>)</h5>}
                     {!currentUser && !isAdmin && <span></span>}
-                    {!currentUser && <span><Link to="/login">Login</Link></span>}
-                    {currentUser && <span>Welcome back {currentUser.username}<Link to="/profile">Profile</Link></span>}
+                    {!currentUser && <h5><Link to="/login" className="wd-nav-link">Login</Link></h5>}
+                    {currentUser && !isAdmin && <h5>Welcome back: {currentUser.username}</h5>}
+                    {currentUser && <h5><Link to="/profile" className="wd-nav-link">Profile</Link> | <Link to="/home" className="wd-nav-link" onClick={logoutClickHandler}>Logout</Link></h5> }
                 </div>
             </div>
             <div className="navbar navbar-expand">
-                <div className="container-fluid justify-content-center">
+                <div className="container justify-content-center">
                     <ul className="navbar-nav">
-                        <li className="nav-item wd-navigation-item-border px-3">
+                        <li className="nav-item wd-navigation-item-border">
                             <Link to="/home" className="nav-link">Home</Link>
                         </li>
-                        <li className="nav-item wd-navigation-item-border px-3">
+                        <li className="nav-item wd-navigation-item-border">
                             <Link to="/search" className="nav-link">Search</Link>
                         </li>
-                        <li className="nav-item wd-navigation-item-border px-3">
+                        <li className="nav-item wd-navigation-item-border">
                             <Link to="/cocktails" className="nav-link">Cocktails</Link>
                         </li>
-                        <li className="nav-item wd-navigation-item-border px-3">
+                        <li className="nav-item wd-navigation-item-border">
                             <Link to="/tours" className="nav-link">Histories</Link>
                         </li>
-                        <li className="nav-item px-3">
+                        <li className="nav-item">
                             <Link to="/pairings" className="nav-link">Pairings</Link>
                         </li>
                     </ul>

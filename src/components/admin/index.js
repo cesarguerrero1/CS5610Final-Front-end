@@ -28,6 +28,8 @@ function AdminPage() {
         //Check to see the user is logged in AND an admin
         if (currentUser === null || isAdmin === false) {
             navigate('/home');
+        }else{
+            dispatch(findAllUsersThunk());
         }
         dispatch(findAllUsersThunk());
     })

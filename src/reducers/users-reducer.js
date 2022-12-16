@@ -31,10 +31,12 @@ const userSlice = createSlice({
             if(state.currentUser.accountType === "ADMIN"){
                 state.isAdmin = true;
             }
+            return
         },
         [isLoggedInThunk.rejected]: (state, action) => {
             state.currentUser = null;
             state.isAdmin = false;
+            return
         },
 
         //Attempt to log the user in
@@ -45,9 +47,11 @@ const userSlice = createSlice({
             if(state.currentUser.accountType === "ADMIN"){
                 state.isAdmin = true;
             }
-            alert('Your login attempt was successful! Redirecting you to the home page');
+            alert("Successful Login! Redirecting you to home!");
+            return
         },
         [loginThunk.rejected]: (state, action) =>{
+            state.loginAttemptFailed = true;
             alert("The given username and/or password are invalid");
             return;
         },
@@ -57,6 +61,7 @@ const userSlice = createSlice({
             state.currentUser = null;
             state.loginAttemptFailed = false;
             state.isAdmin = false;
+            return
         },
 
         //Regiser a user

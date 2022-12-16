@@ -17,8 +17,8 @@ import {loginThunk, registerThunk} from "../../services/thunks/users-thunk.js"
 function Login() {
     const { currentUser } = useSelector(state => state.users);
 
-    const navigate = useNavigate;
-    const dispatch = useDispatch;
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     //State Handling for Login
     const [loginUsername, setLoginUsername] = useState('');
@@ -30,7 +30,7 @@ function Login() {
         } else {
             alert("Attempting to Login");
             //Dispatch a call to see if this user is allowed to be logged in!
-            console.log(dispatch(loginThunk({username:loginUsername, password:loginPassword})));
+            dispatch(loginThunk({username:loginUsername, password:loginPassword}));
         }
     }
 
