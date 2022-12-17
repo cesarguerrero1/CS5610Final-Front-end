@@ -17,6 +17,8 @@ import { Provider } from "react-redux"
 //Reducers
 import usersReducer from "../reducers/users-reducer.js";
 import cocktailsReducer from "../reducers/cocktails-reducer.js"
+import reviewsReducer from "../reducers/reviews-reducer.js";
+import endorsementsReducer from "../reducers/endorsements-reducer.js";
 
 //Components
 import CheckUser from "./authentication/index.js";
@@ -37,7 +39,9 @@ import "./index.css"
 const store = configureStore({
     reducer:{
         users: usersReducer,
-        cocktails: cocktailsReducer
+        cocktails: cocktailsReducer,
+        reviews: reviewsReducer,
+        endorsements: endorsementsReducer
     }
 })
 

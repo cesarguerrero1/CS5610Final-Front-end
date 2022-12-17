@@ -66,7 +66,7 @@ function Home() {
                             <h6 className="mb-3"><b>Drink Name: </b><span className = "wd-clickable-link" onClick={() => {communityCocktailClickHandler(allDatabaseDrinks[allDatabaseDrinks.length-1])}}>{allDatabaseDrinks[allDatabaseDrinks.length-1].drinkName}</span></h6>
                             <h6 className="mb-3"><b>Main Alcohol: </b>{allDatabaseDrinks[allDatabaseDrinks.length-1].mainAlcohol}</h6>
                             {allDatabaseDrinks[allDatabaseDrinks.length-1].createdBy && 
-                            <h6 className="mb-3"><b>Creator: </b><span className = "wd-clickable-link" onClick={() => {visitProfileClickHandler(allDatabaseDrinks[allDatabaseDrinks.length-1].createdBy)}}>{allDatabaseDrinks[allDatabaseDrinks.length-1].createdBy.username} ({allDatabaseDrinks[allDatabaseDrinks.length - 1].createdBy.yearsOfExperience} Years of Experience)</span></h6>
+                            <h6 className="mb-3"><b>Creator: </b><span className = "wd-clickable-link" onClick={() => {visitProfileClickHandler(allDatabaseDrinks[allDatabaseDrinks.length-1].createdBy)}}>{allDatabaseDrinks[allDatabaseDrinks.length-1].createdBy.username}</span></h6>
                             }
                             {!(allDatabaseDrinks[allDatabaseDrinks.length-1].createdBy) && <h6 className="text-danger"><b>Creator: </b>User Was Deleted!</h6>}
                             <h6><b>Creation Date: </b>{allDatabaseDrinks[allDatabaseDrinks.length-1].creationDate.slice(0,10)}</h6>

@@ -49,7 +49,6 @@ function CocktailsList(){
                             {currentUser && 
                                 <button className="btn wd-delete-button mx-3" onClick={() => {deleteClickHandler(drink)}} disabled={drink.createdBy !== null && drink.createdBy._id === currentUser._id ? false : true}> Delete Cocktail</button>
                             }
-                            
                         </li>
                     )
                 }

@@ -80,7 +80,12 @@
 /**CSS FOR DETAILS PAGE**/
 .img-thumbnail.wd-detail-image{
     width:500px;
-    height:auto
+    height:auto;
+}
+
+.wd-details-background{
+    background-color: lightgray;
+    border-radius: 16px;
 }
 
 /**BREAKPOINTS FOR NAVIGATION SIZING**/

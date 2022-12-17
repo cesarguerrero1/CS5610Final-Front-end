@@ -1,44 +1,72 @@
 /**
  * Cesar Guerrero
- * 12/15/22
+ * 12/16/22
  * CS5610 - Final Project
  * 
- * @file Search Details
+ * @file Reviews
  */
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
+import { findAllReviewsThunk, createReviewThunk} from "../../services/thunks/reviews-thunk.js";
 
+//THUNK
+
+//What this function is doing is calling a 
 function Reviews({did}) {
+    const {currentUser} = useSelector(state => state.users);
+    const {allReviews} = useSelector(state => state.reviews);
+    const [reviewText, setReviewText] = useState('');
+    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    function reviewClickHandler(did){
-        //We need to call the review THUNK so that we can review this drink
-        if(currentUser === null){
-            alert("You are only allowed to leave reviews if you are logged in!");
-        }else{
-            alert(did)
+    function reviewClickHandler(){
+        if(reviewText === ""){
+            alert("You cannot post an empty review! Please type something");
+            return
         }
+
+        dispatch(createReviewThunk({author:currentUser._id, cocktail:did, comment:reviewText}));
     }
 
+    function userClickHandler(user){
+        navigate(`/profile/${user._id}`, {state:user});
+    }
+
+    useEffect(() => {
+        dispatch(findAllReviewsThunk());
+    }, [dispatch])
+
     return (
-        <div className="col-12 row">
+        <div className="my-5 row">
             <div className="my-5">
                 <h2 className="text-center">Drink Reviews</h2>
-                <hr className="w-25 m-auto"></hr>
+                <hr className="w-25 m-auto"/>
             </div>
             <div className="col-12 col-md-4">
-                <label className="form-label">Share your thoughts below</label>
-                <textarea className="form-control"></textarea>
-                {
-                    !state && detailedApiDrink && <button className="btn wd-button w-50 mx-auto my-3" onClick={() => reviewClickHandler(drink.idDrink)}>Review</button>
+                <label for="reviewText" className="form-label fw-bold">Share your thoughts below</label>
+                <textarea id="reviewText" className="form-control" value={reviewText} onChange={(event) => setReviewText(event.target.value)}></textarea>
+                {currentUser && 
+                <button className="btn wd-button w-50 mx-auto my-3" onClick={reviewClickHandler}>Post</button>
                 }
-                {state && <button className="btn wd-button w-50 mx-auto my-3" onClick={() => reviewClickHandler(state._id)}>Review</button>}
             </div>
             <div className="col-12 col-md-8">
                 <ul className="list-group">
+                    {allReviews.map((review) => {
+                        return( review.cocktail === did ? 
+                                <li className="list-group-item">
+                                    <h5>{review.author !== null ? <span className="wd-clickable-link" onClick={() => {userClickHandler(review.author)}}>{review.author.username}</span> : <span>"User Was Deleted!"</span>} - <b>Posted on: </b>{review.postedDate.slice(0,10)}</h5>
+                                    <p>{review.comment}</p>
+                                </li> 
+                                : null
+                                
+                            )
+                    })}
                 </ul>
             </div>
+
         </div>
     )
 }
