@@ -33,7 +33,9 @@ function AdminPage() {
         if (currentUser === null || isAdmin === false) {
             navigate('/home');
         }else{
-            dispatch(findAllUsersThunk());
+            if(allUsers.length === 0){
+                dispatch(findAllUsersThunk());
+            }
         }
     }, [dispatch, currentUser, isAdmin, allUsers, navigate]);
 
