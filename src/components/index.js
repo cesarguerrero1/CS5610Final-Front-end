@@ -19,6 +19,8 @@ import usersReducer from "../reducers/users-reducer.js";
 import cocktailsReducer from "../reducers/cocktails-reducer.js"
 import reviewsReducer from "../reducers/reviews-reducer.js";
 import endorsementsReducer from "../reducers/endorsements-reducer.js";
+import pairingReducer from "../reducers/pairing-reducer.js";
+import tourReducer from "../reducers/tour-reducer.js";
 
 //Components
 import CheckUser from "./authentication/index.js";
@@ -28,10 +30,11 @@ import Login from "./login/index.js";
 import AdminPage from "./admin/index.js";
 import PublicProfile from "./profile/public-profile.js";
 import PrivateProfile from "./profile/private-profile.js";
-//Have not visited the ones below just yet!
 import Search from "./search/search.js"
 import Cocktails from "./cocktails/index.js"
 import CocktailDetails from "./search/details.js"
+import HistoryTour from "./histories/index.js"
+import Pairing from "./pairings/index.js"
 
 //CSS
 import "./index.css"
@@ -41,7 +44,9 @@ const store = configureStore({
         users: usersReducer,
         cocktails: cocktailsReducer,
         reviews: reviewsReducer,
-        endorsements: endorsementsReducer
+        endorsements: endorsementsReducer,
+        tours: tourReducer,
+        pairings: pairingReducer
     }
 })
 
@@ -65,6 +70,8 @@ function Mixologist(){
                             <Route path="/search/*" element={<Search/>}/>
                             <Route path="/cocktails" element={<Cocktails/>}/>
                             <Route path="/details/:cid" element={<CocktailDetails/>}/>
+                            <Route path="/history-tours" element={<HistoryTour/>}/>
+                            <Route path="/pairings" element={<Pairing/>}/>
                         </Routes>
                     </div>
                 </div>
