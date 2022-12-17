@@ -9,6 +9,8 @@
 
 import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+//Thunks
 import { deleteTourThunk, findAllToursThunk } from "../../services/thunks/tour-thunk.js";
 
 import CreateHistory from "./history-form.js";

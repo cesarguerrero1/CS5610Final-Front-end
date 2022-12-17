@@ -8,6 +8,8 @@
 
 import React, { useState, } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+//Thunk
 import { createTourThunk } from "../../services/thunks/tour-thunk";
 
 function HistoryForm() {
@@ -26,6 +28,7 @@ function HistoryForm() {
             return
         }else if(currentUser === null){
             alert("You must be a member in order to post historical accounts!");
+            return
         }else{
             dispatch(createTourThunk({
                 author:currentUser._id,
