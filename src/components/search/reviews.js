@@ -9,6 +9,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+
+//THUNKS
 import { findAllReviewsThunk, createReviewThunk} from "../../services/thunks/reviews-thunk.js";
 
 //THUNK
@@ -29,6 +31,7 @@ function Reviews({did}) {
         }
 
         dispatch(createReviewThunk({author:currentUser._id, cocktail:did, comment:reviewText}));
+        return
     }
 
     function userClickHandler(user){
@@ -56,13 +59,13 @@ function Reviews({did}) {
                 <ul className="list-group">
                     {allReviews.map((review) => {
                         return( review.cocktail === did ? 
-                                <li className="list-group-item">
+                                <li key={review._id} className="list-group-item">
                                     <h5>{review.author !== null ? <span className="wd-clickable-link" onClick={() => {userClickHandler(review.author)}}>{review.author.username}</span> : <span>"User Was Deleted!"</span>} - <b>Posted on: </b>{review.postedDate.slice(0,10)}</h5>
                                     <p>{review.comment}</p>
                                 </li> 
                                 : null
                                 
-                            )
+                        )
                     })}
                 </ul>
             </div>

@@ -8,23 +8,43 @@
 
 import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
+
+//THUNKS
+import {findAllEndorsementsThunk, createEndorsementThunk} from "../../services/thunks/endorsements-thunk.js"
 
 function Endorsements({did}){
 
     const {currentUser} = useSelector(state => state.users);
+    const {allEndorsements} = useSelector(state => state.endorsements);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
+    //
     function endorseClickHandler() {
-        //We need to call an endorsement THUNK so that we can endorse this drink by a bartender!
-        console.log(currentUser);
+        const alreadyEndorsed = allEndorsements.find((endorsement) => {
+            return endorsement.endorser._id === currentUser._id && endorsement.cocktail === did
+        })
 
+        if(alreadyEndorsed){
+            alert("You have already enorsed this!");
+            return
+        }else{
+            dispatch(createEndorsementThunk({cocktail:did, endorser:currentUser._id}));
+            setTimeout(() => {window.location.reload()}, 500);
+            return
+        }
     }   
 
+    function userClickHandler(user){
+        navigate(`/profile/${user._id}`, {state:user});
+    }
+
     useEffect(() => {
-        //Call all of the endorsements!
-    })
+       dispatch(findAllEndorsementsThunk());
+    }, [dispatch])
+    
     return(
         <div className="my-5">
             <div className="my-5">
@@ -34,6 +54,14 @@ function Endorsements({did}){
                 }
                 <hr className="w-25 m-auto"></hr>
                 <ul>
+                    {allEndorsements.map((endorsement) => {
+                        return(endorsement.cocktail === did ?
+                            <li key={endorsement._id} className="list-group-item">
+                                <h5>{endorsement.endorser !== null ? <span className="wd-clickable-link" onClick={() => {userClickHandler(endorsement.endorser)}}>{endorsement.endorser.username}</span> : <span>"User Was Deleted!"</span>} - <b>Endorsed on: </b>{endorsement.endorsementDate.slice(0,10)}</h5>
+                            </li> 
+                        : null
+                        )
+                    })}
                 </ul>
             </div>
         </div>
