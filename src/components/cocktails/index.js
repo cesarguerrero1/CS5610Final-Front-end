@@ -14,7 +14,7 @@ import {useNavigate } from "react-router";
 import CreateCocktail from "./create-cocktail.js";
 
 //Thunks
-import { findAllCocktailsThunk } from "../../services/thunks/cocktails-thunk.js";
+import { findAllCocktailsThunk, deleteCocktailThunk} from "../../services/thunks/cocktails-thunk.js";
 
 function CocktailsList(){
 
@@ -25,7 +25,11 @@ function CocktailsList(){
     const navigate = useNavigate();
 
     function cocktailClickHandler(drink){
-        navigate(`/cocktails/${drink._id}`, {state:drink});
+        navigate(`/details/${drink._id}`, {state:drink});
+    }
+
+    function deleteClickHandler(drink){
+        dispatch(deleteCocktailThunk(drink._id));
     }
 
     useEffect(() => {
@@ -34,11 +38,20 @@ function CocktailsList(){
 
     return (
         <div>
-            {currentUser && <CreateCocktail/>}
-            <div>
+            <CreateCocktail/>
+            <div className="my-5">
+                <h2>Community Cocktails</h2>
                 <ul className="list-group">
                 {allDatabaseDrinks.map((drink) => {
-                    return(<li key={drink._id} className="list-group-item wd-list-item" onClick={() => {cocktailClickHandler(drink)}}>{drink.drinkName}</li>)
+                    return(
+                        <li key={drink._id} className="list-group-item">
+                            <span className="wd-clickable-link" onClick={() => {cocktailClickHandler(drink)}}>{drink.drinkName} (Created On: {drink.creationDate.slice(0,10)})</span>
+                            {currentUser && 
+                                <button className="btn wd-delete-button mx-3" onClick={() => {deleteClickHandler(drink)}} disabled={drink.createdBy !== null && drink.createdBy._id === currentUser._id ? false : true}> Delete Cocktail</button>
+                            }
+                            
+                        </li>
+                    )
                 }
                 )}
                 </ul>
@@ -46,5 +59,4 @@ function CocktailsList(){
         </div>
     )
 }
-
 export default CocktailsList;

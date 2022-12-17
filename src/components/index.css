@@ -72,6 +72,17 @@
     cursor:pointer;
 }
 
+.img-thumbnail.wd-search-image{
+    height:100px;
+    width:auto;
+}
+
+/**CSS FOR DETAILS PAGE**/
+.img-thumbnail.wd-detail-image{
+    width:500px;
+    height:auto
+}
+
 /**BREAKPOINTS FOR NAVIGATION SIZING**/
 @media (min-width: 576px){
     .nav-item{

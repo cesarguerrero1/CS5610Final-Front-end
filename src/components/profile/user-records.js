@@ -23,7 +23,7 @@ function UserRecords({ user }) {
     const navigate = useNavigate();
 
     function communityCocktailClickHandler(cocktail) {
-        navigate(`/cocktails/${cocktail._id}`, { state: cocktail })
+        navigate(`/details/${cocktail._id}`, { state: cocktail })
     }
 
     useEffect(() => {
@@ -33,30 +33,27 @@ function UserRecords({ user }) {
     return (
         <div>
             <div className="=col-12">
-                <h5>My Cocktails</h5>
+                <h4>My Cocktails</h4>
                 <ul className="list-group">
-                    <ul className="list-group">
-                        {myDrinks.map((drink) => {
-                            return <li key={drink._id} className="list-group-item"><span className="wd-clickable-link" onClick={() => { communityCocktailClickHandler(drink) }}>{drink.drinkName} (Created On: {drink.creationDate.slice(0, 10)})</span></li>
-                        })}
-                    </ul>
+                    {myDrinks.map((drink) => {
+                        return <li key={drink._id} className="list-group-item"><span className="wd-clickable-link" onClick={() => { communityCocktailClickHandler(drink) }}>{drink.drinkName} (Created On: {drink.creationDate.slice(0, 10)})</span></li>
+                    })}
                 </ul>
-
             </div>
             <div className="=col-12 my-5">
-                <h5>My Histories</h5>
+                <h4>My Histories</h4>
             </div>
             <div className="=col-12 my-5">
-                <h5>My Pairings</h5>
+                <h4>My Pairings</h4>
             </div>
             {currentUser &&
                 <div className="=col-12 my-5">
-                    <h5>My Reviews</h5>
+                    <h4>My Reviews</h4>
                 </div>
             }
             {user.accountType === "BARTENDER" &&
                 <div className="=col-12 my-5">
-                    <h5>My Endorsements</h5>
+                    <h4>My Endorsements</h4>
                 </div>
             }
         </div>

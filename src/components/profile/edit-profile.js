@@ -38,7 +38,7 @@ function EditProfile() {
     }
 
     return (
-        <div className="=col-12">
+        <div className="=col-12 mb-5">
             <div className="w-75 m-auto my-3 p-3 wd-form-border">
                 <h3 className="text-center">Edit Profile</h3>
                 <div className="m-3">

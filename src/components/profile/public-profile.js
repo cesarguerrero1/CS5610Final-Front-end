@@ -24,7 +24,6 @@ function PublicProfile() {
 
     const dispatch = useDispatch();
     const [publicUser, setPublicUser] = useState(null);
-   
 
     //We need to get all of our users first THEN we can find the user of interest!
     useEffect(() => {
@@ -46,7 +45,7 @@ function PublicProfile() {
         <div>
             {publicUser &&
                 <div className="row">
-                    <div className="col-12 col-md-4">
+                    <div className="col-12 col-md-4 mb-4">
                         <div className="wd-border p-3">
                             <h5 className="text-decoration-underline">General Information</h5>
                             <h6><b>Name:</b> {publicUser.firstname + " " + publicUser.lastname}</h6>

@@ -58,10 +58,9 @@ function Mixologist(){
                             <Route path="/admin/users" element={<AdminPage/>}/>
                             <Route path="/profile" element={<PrivateProfile/>}/>
                             <Route path="/profile/:uid" element={<PublicProfile/>}/>
-                            
-                            <Route path="/search" element={<Search/>}/>
+                            <Route path="/search/*" element={<Search/>}/>
                             <Route path="/cocktails" element={<Cocktails/>}/>
-                            <Route path="/cocktails/:cid" element={<CocktailDetails/>}/>
+                            <Route path="/details/:cid" element={<CocktailDetails/>}/>
                         </Routes>
                     </div>
                 </div>

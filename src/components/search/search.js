@@ -6,50 +6,41 @@
  * @file Search page!
  */
 
-import React, {useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {Routes, Route, useNavigate} from "react-router-dom";
+
+//Components
+import Results from "./results.js";
 
 //Thunks
-import { searchDrinksByIngredientThunk, searchDrinkByIdThunk} from "../../services/thunks/cocktails-thunk";
+import { searchDrinksByIngredientThunk} from "../../services/thunks/cocktails-thunk";
 
-function Search(){
+function Search() {
 
+    //Search Term and then get the results from our reducer
     const [ingredient, setIngredient] = useState('');
-    const {searchedDrinks} = useSelector((state) => (state.cocktails));
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    function searchClickHandler(){
+    function searchClickHandler() {
         dispatch(searchDrinksByIngredientThunk(ingredient));
+        setTimeout(() =>{navigate(`./results?ingredient=${ingredient}`)}, 500)
     };
 
-    function cocktailClickHandler(drink){
-        dispatch(searchDrinkByIdThunk(drink.idDrink));
-        setTimeout(() => {navigate(`/cocktails/${drink.idDrink}`, {state:null})}, 1500);
-        
-    }
-
-
-    return(
+    return (
         <div>
-            <div className="w-50 m-auto text-center">
-                <h4>Type in the ingredient that you want in your cocktail!</h4>
-                <input className="form-control" value={ingredient} placeholder="Example: mint" onChange={(event) => {setIngredient(event.target.value)}}></input>
-                <button className="btn wd-search-button" onClick={searchClickHandler}>Search</button>
+            <div className="w-75 m-auto text-center">
+                <h4>Using the search bar below type in a single ingredient that you would like to use in a cocktail</h4>
+                <div className="d-flex justify-content-center">
+                    <input className="form-control" value={ingredient} placeholder="mint" onChange={(event) => { setIngredient(event.target.value) }}></input>
+                    <button className="btn wd-button ms-5 w-25" onClick={searchClickHandler}>Search</button>
+                </div>
             </div>
-            {searchedDrinks && 
-            <div className="wd-border p-5">
-                <ul className="list-group">
-                {searchedDrinks.map((drink) => {
-                    return(<li key={drink.idDrink} className="list-group-item wd-list-item" onClick={() => {cocktailClickHandler(drink)}}>{drink.strDrink}</li>)
-                })
-                }
-                </ul>
-            </div>
-            }
-
+            <Routes>
+                <Route path={`/results/*`} element={<Results/>}/>
+            </Routes>
         </div>
     )
 }

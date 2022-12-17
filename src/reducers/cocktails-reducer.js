@@ -26,10 +26,12 @@ const cocktailSlice = createSlice({
         //Get an array of drinks from 3rd party
         [searchDrinksByIngredientThunk.fulfilled]: (state, action) => {
             state.apiDrinks = action.payload;
+            state.detailedApiDrink = null;
             return
         },
         [searchDrinksByIngredientThunk.rejected]: (state, action) => {
             state.apiDrinks = [];
+            state.detailedApiDrink = null;
             return
         },
 

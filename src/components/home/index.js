@@ -21,7 +21,7 @@ function Home() {
 
     //Handle the clicks
     function communityCocktailClickHandler(cocktail){
-        navigate(`/cocktails/${cocktail._id}`, {state:cocktail})
+        navigate(`/details/${cocktail._id}`, {state:cocktail})
     }
 
     function visitProfileClickHandler(user){
