@@ -11,9 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 //Thunks
-import { findMyCocktailsThunk } from "../../services/thunks/cocktails-thunk.js";
+import { deleteCocktailThunk, findMyCocktailsThunk } from "../../services/thunks/cocktails-thunk.js";
 import { deleteReviewThunk, findAllMyReviewsThunk } from "../../services/thunks/reviews-thunk.js";
-import { deleteEndorsementThunk, findAllMyEndorsementsThunk} from "../../services/thunks/endorsements-thunk.js";
+import { deleteEndorsementThunk, findAllMyEndorsementsThunk } from "../../services/thunks/endorsements-thunk.js";
 
 //Notice that we use user here as we want to reuse this component for the public profile as well!
 function UserRecords({ user }) {
@@ -21,7 +21,7 @@ function UserRecords({ user }) {
     const { currentUser } = useSelector(state => state.users);
     const { myDrinks } = useSelector(state => state.cocktails);
     const { myReviews } = useSelector(state => state.reviews);
-    const { myEndorsements} = useSelector(state => state.endorsements);
+    const { myEndorsements } = useSelector(state => state.endorsements);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,11 +30,15 @@ function UserRecords({ user }) {
         navigate(`/details/${cocktailId}`, { state: null })
     }
 
-    function deleteReviewClickHandler(rid){
+    function deleteCocktailClickHandler(cid){
+        dispatch(deleteCocktailThunk(cid));
+    }
+
+    function deleteReviewClickHandler(rid) {
         dispatch(deleteReviewThunk(rid));
     }
 
-    function deleteEndorsementClickHandler(eid){
+    function deleteEndorsementClickHandler(eid) {
         dispatch(deleteEndorsementThunk(eid));
     }
 
@@ -50,7 +54,13 @@ function UserRecords({ user }) {
                 <h4>My Cocktails</h4>
                 <ul className="list-group">
                     {myDrinks.map((drink) => {
-                        return <li key={drink._id} className="list-group-item"><span className="wd-clickable-link" onClick={() => { communityCocktailClickHandler(drink._id) }}>{drink.drinkName} (Created On: {drink.creationDate.slice(0, 10)})</span></li>
+                        return <li key={drink._id} className="list-group-item">
+                            <span className="wd-clickable-link" onClick={() => { communityCocktailClickHandler(drink._id) }}>{drink.drinkName} (Created On: {drink.creationDate.slice(0, 10)})</span>
+                            {
+                                currentUser && drink.createdBy && currentUser._id === drink.createdBy._id &&
+                                <button className="btn wd-delete-button ms-5" onClick={() => { deleteCocktailClickHandler(drink._id) }}>Delete Cocktail</button>
+                            }
+                        </li>
                     })}
                 </ul>
             </div>
@@ -59,13 +69,13 @@ function UserRecords({ user }) {
                     <h4>My Reviews</h4>
                     <ul className="list-group">
                         {myReviews.map((review) => {
-                            return(
+                            return (
                                 <li key={review._id} className="list-group-item d-flex align-middle">
-                                    <span className="wd-clickable-link" onClick={() => {communityCocktailClickHandler(review.cocktail)}}>{review.comment} (Posted On: {review.postedDate.slice(0,10)})</span>
+                                    <span className="wd-clickable-link" onClick={() => { communityCocktailClickHandler(review.cocktail) }}>{review.comment} (Posted On: {review.postedDate.slice(0, 10)})</span>
                                     {
-                                        currentUser && review.author && currentUser._id === review.author._id && 
-                                        <button className="btn wd-delete-button ms-5" onClick={() => {deleteReviewClickHandler(review._id)}}>Delete Review</button>  
-                                    }   
+                                        currentUser && review.author && currentUser._id === review.author._id &&
+                                        <button className="btn wd-delete-button ms-5" onClick={() => { deleteReviewClickHandler(review._id) }}>Delete Review</button>
+                                    }
                                 </li>
                             )
                         })}
@@ -77,13 +87,13 @@ function UserRecords({ user }) {
                     <h4>My Endorsements</h4>
                     <ul className="list-group">
                         {myEndorsements.map((endorsement) => {
-                            return(
+                            return (
                                 <li key={endorsement._id} className="list-group-item d-flex align-middle">
-                                    <span className="wd-clickable-link" onClick={() => {communityCocktailClickHandler(endorsement.cocktail)}}>Cocktail Endorsed On: {endorsement.endorsementDate.slice(0,10)}</span>
+                                    <span className="wd-clickable-link" onClick={() => { communityCocktailClickHandler(endorsement.cocktail) }}>Cocktail Endorsed On: {endorsement.endorsementDate.slice(0, 10)}</span>
                                     {
-                                        currentUser && endorsement.endorser && currentUser._id === endorsement.endorser._id && 
-                                        <button className="btn wd-delete-button ms-5" onClick={() => {deleteEndorsementClickHandler(endorsement._id)}}>Delete Endorsement</button>  
-                                    }   
+                                        currentUser && endorsement.endorser && currentUser._id === endorsement.endorser._id &&
+                                        <button className="btn wd-delete-button ms-5" onClick={() => { deleteEndorsementClickHandler(endorsement._id) }}>Delete Endorsement</button>
+                                    }
                                 </li>
                             )
                         })}

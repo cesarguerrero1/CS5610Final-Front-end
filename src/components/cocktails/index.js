@@ -14,11 +14,10 @@ import {useNavigate } from "react-router";
 import CreateCocktail from "./create-cocktail.js";
 
 //Thunks
-import { findAllCocktailsThunk, deleteCocktailThunk} from "../../services/thunks/cocktails-thunk.js";
+import { findAllCocktailsThunk} from "../../services/thunks/cocktails-thunk.js";
 
 function CocktailsList(){
 
-    const {currentUser} = useSelector(state => state.users);
     const {allDatabaseDrinks} = useSelector(state => state.cocktails);
 
     const dispatch = useDispatch();
@@ -26,10 +25,6 @@ function CocktailsList(){
 
     function cocktailClickHandler(drink){
         navigate(`/details/${drink._id}`, {state:drink});
-    }
-
-    function deleteClickHandler(drink){
-        dispatch(deleteCocktailThunk(drink._id));
     }
 
     useEffect(() => {
@@ -46,9 +41,6 @@ function CocktailsList(){
                     return(
                         <li key={drink._id} className="list-group-item">
                             <span className="wd-clickable-link" onClick={() => {cocktailClickHandler(drink)}}>{drink.drinkName} (Created On: {drink.creationDate.slice(0,10)})</span>
-                            {currentUser && 
-                                <button className="btn wd-delete-button mx-3" onClick={() => {deleteClickHandler(drink)}} disabled={drink.createdBy !== null && drink.createdBy._id === currentUser._id ? false : true}> Delete Cocktail</button>
-                            }
                         </li>
                     )
                 }
