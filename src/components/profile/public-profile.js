@@ -9,6 +9,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 
+//Components
+import UserRecords from "./user-records.js";
+
 
 function PublicProfile() {
     const { uid } = useParams();
@@ -23,28 +26,14 @@ function PublicProfile() {
     return (
         <div>
             {publicUser &&
-                <div>
-                    <div className="=col-12">
+                <div clas>
+                    <div className="=col-4">
                         <h6>Username: {publicUser.username}</h6>
                         <h6>Account Type: {publicUser.accountType}</h6>
                         {publicUser.accounType === "CONNOISSEUR" && <h6>Favorite Drink: {publicUser.favoriteDrink}</h6>}
                         {publicUser.accounType === "BARTENDER" && <h6>Currently Working: {publicUser.currentWorkplace} ({publicUser.yearsOfExperience} Years of Experience)</h6>}
                     </div>
-                    <div className="=col-12">
-                        <h5>My Cocktails</h5>
-                    </div>
-                    <div className="=col-12">
-                        <h5>My Histories</h5>
-                    </div>
-                    <div className="=col-12">
-                        <h5>My Pairings</h5>
-                    </div>
-                    <div className="=col-12">
-                        <h5>My Reviews</h5>
-                    </div>
-                    <div className="=col-12">
-                        <h5>My Endorsements</h5>
-                    </div>
+                    <UserRecords user={publicUser}/>
                 </div>
             }
         </div>

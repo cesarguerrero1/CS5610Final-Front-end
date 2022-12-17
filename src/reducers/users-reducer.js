@@ -13,7 +13,6 @@ import { isLoggedInThunk, loginThunk, logoutThunk, registerThunk, findAllUsersTh
 
 //This is the initial state of our program
 const initialState = {
-    loginAttemptFailed: false,
     isAdmin: false,
     currentUser: null,
     allUsers:[],
@@ -42,7 +41,6 @@ const userSlice = createSlice({
         //Attempt to log the user in
         [loginThunk.fulfilled]: (state, action) =>{
             state.currentUser = action.payload;
-            state.loginAttemptFailed = false;
             //Check if they are an admin
             if(state.currentUser.accountType === "ADMIN"){
                 state.isAdmin = true;
@@ -51,7 +49,6 @@ const userSlice = createSlice({
             return
         },
         [loginThunk.rejected]: (state, action) =>{
-            state.loginAttemptFailed = true;
             alert("The given username and/or password are invalid");
             return;
         },
@@ -59,7 +56,6 @@ const userSlice = createSlice({
         //Log the user out
         [logoutThunk.fulfilled]: (state, action) =>{
             state.currentUser = null;
-            state.loginAttemptFailed = false;
             state.isAdmin = false;
             return
         },
@@ -90,9 +86,11 @@ const userSlice = createSlice({
             const index = state.allUsers.findIndex((user) => {
                 return user._id === action.payload._id;
             })
+
             state.allUsers[index] = action.payload;
+
             //We may potentially be updating our own file so let's check that
-            if(action.payload._id === state.currentUser._id){
+            if(state.currentUser._id === action.payload._id){
                 state.currentUser = action.payload;
             }
             alert("Successful account update!");

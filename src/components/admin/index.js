@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 //Thunks
-import { findAllUsersThunk, deleteUserThunk} from "../../services/thunks/users-thunk";
+import { findAllUsersThunk, deleteUserThunk} from "../../services/thunks/users-thunk.js";
 
 function AdminPage() {
 
@@ -20,8 +20,8 @@ function AdminPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    function userRowClickHandler(user) {
-        navigate(`/profile/${user._id}`);
+    function userClickHandler(user) {
+        navigate(`/profile/${user._id}`, {state:user});
     }
 
     function deleteClickHandler(uid){
@@ -35,16 +35,16 @@ function AdminPage() {
         }else{
             dispatch(findAllUsersThunk());
         }
-    })
+    }, [dispatch, currentUser, isAdmin, allUsers, navigate]);
 
     return (
         <div className="wd-border py-3 px-2">
             <div className="text-center mb-3">
                 <h6>
                     The table below contains all of the users in the database.
-                    Click on any of the rows to be redirected to their profile page
+                    Click on a username to be redirected to that users profile page
                 </h6>
-                <hr className="w-50 m-auto" />
+                <hr className="wd-line-break" />
             </div>
             <div className="table-responsive">
                 <table className="table table-striped table-hover wd-table-font-size">
@@ -61,11 +61,11 @@ function AdminPage() {
                         {allUsers.map((user) => {
                             return (
                                 <tr key={user._id} className="align-middle">
-                                    <td onClick={() => { userRowClickHandler(user)}}>{user.username}</td>
+                                    <td className="wd-table-click" onClick={() => { userClickHandler(user)}}>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.accountType}</td>
                                     <td>{user.joinedDate.slice(0, 10)}</td>
-                                    {currentUser._id !== user._id && <td><button className="btn wd-delete-button" onClick={() => {deleteClickHandler(user._id)}}>Delete</button></td>}
+                                    <td><button className="btn wd-delete-button" onClick={() => {deleteClickHandler(user._id)}} disabled={currentUser._id === user._id ? true : false}>Delete</button></td>
                                 </tr>
                             )
                         })}

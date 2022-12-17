@@ -28,7 +28,6 @@ function Login() {
         if (loginUsername === "" || loginPassword === "") {
             alert("You must input a username/password")
         } else {
-            alert("Attempting to Login");
             //Dispatch a call to see if this user is allowed to be logged in!
             dispatch(loginThunk({username:loginUsername, password:loginPassword}));
         }
@@ -47,7 +46,6 @@ function Login() {
         if(firstname === "" || lastname === "" || registerUsername === "" || registerPassword === "" || email === ""){
             alert('You must provide inpute for every field in order to register');
         }else{
-            alert("Attempting to register!");
             //Dispatch call goes here!
             dispatch(registerThunk({firstname, lastname, username:registerUsername, password:registerPassword, email, accountType}))
         }
@@ -64,7 +62,7 @@ function Login() {
     return (
         <div>
             <div className="col-12">
-                <div className="w-50 m-auto mt-5 py-5 px-3 wd-form-border">
+                <div className="w-50 m-auto my-5 py-5 px-3 wd-form-border">
                     <div className="text-center">
                         <h3>Login <i className="fas fa-cocktail"></i></h3>
                     </div>
@@ -77,12 +75,12 @@ function Login() {
                             <label for="loginPassword" className="form-label">Password</label>
                             <input id="loginPassword" className="form-control" placeholder="Enter your password..." type="password" onChange={(event) => {setLoginPassword(event.target.value)}}/>
                         </div>
-                        <button className='btn wd-login-register-button' onClick={loginClickHandler}>Login</button>
+                        <button className='btn wd-button w-50 m-auto' onClick={loginClickHandler}>Login</button>
                     </div>
                 </div>
             </div>
             <div className="col-12">
-                <div className="w-50 m-auto mt-5 py-5 px-3 wd-form-border">
+                <div className="w-50 m-auto my-5 py-5 px-3 wd-form-border">
                     <div className="text-center">
                         <h3>Register <i className="fas fa-glass-martini"></i></h3>
                     </div>
@@ -114,7 +112,7 @@ function Login() {
                                 <option value="BARTENDER">BARTENDER</option>
                             </select>
                         </div>
-                        <button className='btn wd-login-register-button' onClick={registerClickHandler}>Register</button>
+                        <button className='btn wd-button w-50 m-auto' onClick={registerClickHandler}>Register</button>
                     </div>
                 </div>
             </div>

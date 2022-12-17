@@ -25,7 +25,7 @@ function Search(){
         dispatch(searchDrinksByIngredientThunk(ingredient));
     };
 
-    function cocktailClickHandlder(drink){
+    function cocktailClickHandler(drink){
         dispatch(searchDrinkByIdThunk(drink.idDrink));
         setTimeout(() => {navigate(`/cocktails/${drink.idDrink}`, {state:null})}, 1500);
         
@@ -43,7 +43,7 @@ function Search(){
             <div className="wd-border p-5">
                 <ul className="list-group">
                 {searchedDrinks.map((drink) => {
-                    return(<li key={drink.idDrink} className="list-group-item wd-list-item" onClick={() => {cocktailClickHandlder(drink)}}>{drink.strDrink}</li>)
+                    return(<li key={drink.idDrink} className="list-group-item wd-list-item" onClick={() => {cocktailClickHandler(drink)}}>{drink.strDrink}</li>)
                 })
                 }
                 </ul>

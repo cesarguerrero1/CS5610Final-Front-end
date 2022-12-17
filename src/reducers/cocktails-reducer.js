@@ -9,13 +9,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 //Thunks
-import { searchDrinksByIngredientThunk, searchDrinkByIdThunk, createCocktailThunk, findAllCocktailsThunk, updateCocktailThunk, deleteCocktailThunk} from "../services/thunks/cocktails-thunk.js";
+import { searchDrinksByIngredientThunk, searchDrinkByIdThunk, findAllCocktailsThunk, findMyCocktailsThunk, createCocktailThunk, deleteCocktailThunk} from "../services/thunks/cocktails-thunk.js";
 
 const initialState = {
-    searchedDrinks: [],
-    detailedSearchDrink: null,
-    searchError: false,
-    databaseDrinks: [],
+    apiDrinks: [],
+    detailedApiDrink: null,
+    allDatabaseDrinks: [],
+    myDrinks:[]
 }
 
 const cocktailSlice = createSlice({
@@ -25,28 +25,48 @@ const cocktailSlice = createSlice({
     extraReducers:{
         //Get an array of drinks from 3rd party
         [searchDrinksByIngredientThunk.fulfilled]: (state, action) => {
-            state.searchedDrinks = action.payload;
-            state.searchError = false;
+            state.apiDrinks = action.payload;
             return
         },
         [searchDrinksByIngredientThunk.rejected]: (state, action) => {
-            state.searchError = false;
+            state.apiDrinks = [];
             return
         },
 
         //Get a specific drink from 3rd party
         [searchDrinkByIdThunk.fulfilled]: (state, action) => {
-            state.detailedSearchDrink = action.payload;
-            state.searchError = false;
+            state.detailedApiDrink = action.payload;
+            return
         },
         [searchDrinkByIdThunk.rejected]: (state, action) => {
-            state.detailedSearchDrink = null;
-            state.searchError = true;
+            state.detailedApiDrink = null;
+            return
+        },
+
+        //Find all cocktails
+        [findAllCocktailsThunk.fulfilled]: (state, action) => {
+            state.allDatabaseDrinks = action.payload;
+            return
+        },
+        [findAllCocktailsThunk.rejected]: (state, action) => {
+            state.allDatabaseDrinks = [];
+            return
+        },
+
+        //Find my cocktails
+        [findMyCocktailsThunk.fulfilled]:(state, action) => {
+            state.myDrinks = action.payload;
+            return
+        },
+        [findMyCocktailsThunk.rejected]: (state, action) => {
+            state.myDrinks = [];
+            return
         },
 
         //Create a cocktail
         [createCocktailThunk.fulfilled]: (state, action) => {
-            state.databaseDrinks.push(action.payload);
+            state.allDatabaseDrinks.push(action.payload);
+            state.myDrinks.push(action.payload);
             alert('Cocktail successfully created!');
             return;
         },
@@ -55,32 +75,12 @@ const cocktailSlice = createSlice({
             return;
         },
 
-        //Find all cocktails
-        [findAllCocktailsThunk.fulfilled]: (state, action) => {
-            state.databaseDrinks = action.payload;
-            return
-        },
-        [findAllCocktailsThunk.rejected]: (state, action) => {
-            return
-        },
-
-        //Update a cocktail
-        [updateCocktailThunk.fulfilled]: (state, action) => {
-            const index = state.databaseDrinks.findIndex((cocktail) => {
-                return cocktail._id === action.payload._id;
-            })
-            state.databaseDrinks[index] = action.payload._id;
-            alert('Successful Cocktail update!');
-            return
-        },
-        [updateCocktailThunk.rejected]: (state, action) => {
-            alert('Failure to update Cocktail!');
-            return
-        },
-
         //Delete a cocktail
         [deleteCocktailThunk.fulfilled]: (state, action) => {
-            state.databaseDrinks = state.databaseDrinks.filter((cocktail) => {
+            state.allDatabaseDrinks = state.allDatabaseDrinks.filter((cocktail) => {
+                return cocktail._id !== action.payload;
+            })
+            state.myDrinks = state.myDrinks.filter((cocktail) => {
                 return cocktail._id !== action.payload;
             })
             alert("Successful Cocktail Deletion");

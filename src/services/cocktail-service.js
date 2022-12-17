@@ -16,17 +16,17 @@ export const createCocktail = async(cocktail) => {
     return response.data
 }
 
+export const findMyCocktails = async(uid) => {
+    const response = await axios.get(`${BASE_URL}/users/${uid}/cocktails`);
+    return response.data
+}
+
 export const findAllCocktails = async () => {
     const response = await axios.get(COCKTAILS_API);
     return response.data
 }
 
-export const updateCocktail = async (cocktail) => {
-    const response = await axios.put(`${COCKTAILS_API}/${cocktail._id}`, cocktail);;
-    return response.data
-}
-
-export const deleteCocktail = async(id) => {
-    const response = await axios.delete(`${COCKTAILS_API}/${id}`);
+export const deleteCocktail = async(cid) => {
+    const response = await axios.delete(`${COCKTAILS_API}/${cid}`);
     return response.data
 }

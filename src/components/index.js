@@ -26,7 +26,9 @@ import Login from "./login/index.js";
 import AdminPage from "./admin/index.js";
 import PublicProfile from "./profile/public-profile.js";
 import PrivateProfile from "./profile/private-profile.js";
+//Have not visited the ones below just yet!
 import Search from "./search/search.js"
+import Cocktails from "./cocktails/index.js"
 import CocktailDetails from "./search/details.js"
 
 //CSS
@@ -38,7 +40,6 @@ const store = configureStore({
         cocktails: cocktailsReducer
     }
 })
-
 
 function Mixologist(){
     return(
@@ -57,7 +58,9 @@ function Mixologist(){
                             <Route path="/admin/users" element={<AdminPage/>}/>
                             <Route path="/profile" element={<PrivateProfile/>}/>
                             <Route path="/profile/:uid" element={<PublicProfile/>}/>
+                            
                             <Route path="/search" element={<Search/>}/>
+                            <Route path="/cocktails" element={<Cocktails/>}/>
                             <Route path="/cocktails/:cid" element={<CocktailDetails/>}/>
                         </Routes>
                     </div>

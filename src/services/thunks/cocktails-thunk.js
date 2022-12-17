@@ -11,7 +11,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit"
 import * as cocktailService from "../cocktail-service.js";
 import * as apiService from "../api-service.js";
 
-//These first 3 thunks are for the 3rd party API search
+//These first 2 thunks are for the 3rd party API search
 export const searchDrinksByIngredientThunk = createAsyncThunk('cocktails/getThirdPartyCocktails', (ingredient) => {
     return apiService.searchDrinksByIngredient(ingredient);
 })
@@ -25,13 +25,12 @@ export const createCocktailThunk = createAsyncThunk('cocktails/createCocktail', 
     return cocktailService.createCocktail(cocktail);
 });
 
+export const findMyCocktailsThunk = createAsyncThunk('cocktails/findMyCocktails', (uid) => {
+    return cocktailService.findMyCocktails(uid);
+})
+
 export const findAllCocktailsThunk  = createAsyncThunk('cocktails/findAllCocktails', () => {
     return cocktailService.findAllCocktails();
-});
-
-export const updateCocktailThunk = createAsyncThunk('cocktails/updateCocktail', (cocktail) => {
-    cocktailService.updateCocktail(cocktail)
-    return cocktail;
 });
 
 export const deleteCocktailThunk = createAsyncThunk('cocktails/deleteCocktail', (id) => {

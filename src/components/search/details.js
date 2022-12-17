@@ -14,9 +14,6 @@ function CocktailDetails(){
     const {detailedSearchDrink} = useSelector((state) => state.cocktails)
     const {state} = useLocation(); //If this is null than we are using the 3rd part API and vice versa
 
-
-
-
     return(
         <div>
             {state &&
@@ -25,18 +22,14 @@ function CocktailDetails(){
                 <h6>Main Alcohol:{state.mainAlcohol}</h6>
                 <h6>Drink Name: {state.drinkName}</h6>
                 <h6>Recommended Glass: {state.recommendedServingGlass}</h6>
-                <p>Ingredients: </p>
-                <p>Corresponding Measurements:</p>
                 <p>Instructions:{state.instructions}</p>
                 <h6>Posted On: {state.creationDate.slice(0,10)}</h6>
             </div>
             }
-            {detailedSearchDrink && 
+            {!state && detailedSearchDrink && 
             <div>
                 <h6>Drink Name: {detailedSearchDrink.strDrink}</h6>
                 <h6>Recommended Glass:</h6>
-                <p>Ingredients: </p>
-                <p>Corresponding Measurements:</p>
                 <p>Instructions: {detailedSearchDrink.strInstructions}</p>
             </div>
             }
