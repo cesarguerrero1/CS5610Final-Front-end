@@ -32,7 +32,7 @@ function UserRecords({ user }) {
 
     return (
         <div>
-            <div className="=col-12 my-5">
+            <div className="=col-12">
                 <h5>My Cocktails</h5>
                 <ul className="list-group">
                     <ul className="list-group">

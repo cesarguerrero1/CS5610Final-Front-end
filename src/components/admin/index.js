@@ -41,7 +41,7 @@ function AdminPage() {
         <div className="wd-border py-3 px-2">
             <div className="text-center mb-3">
                 <h6>
-                    The table below contains all of the users in the database.
+                    Hello {currentUser.internalUsername}! The table below contains all of the users in the database.
                     Click on a username to be redirected to that users profile page
                 </h6>
                 <hr className="wd-line-break" />
